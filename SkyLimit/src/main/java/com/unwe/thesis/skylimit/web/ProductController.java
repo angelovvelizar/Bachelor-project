@@ -1,6 +1,9 @@
 package com.unwe.thesis.skylimit.web;
 
 import com.unwe.thesis.skylimit.model.binding.ProductAddBindingModel;
+import com.unwe.thesis.skylimit.model.service.ProductAddServiceModel;
+import com.unwe.thesis.skylimit.service.ProductServiceImpl;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +15,13 @@ import javax.validation.Valid;
 
 @Controller
 public class ProductController {
+    private final ProductServiceImpl productService;
+    private final ModelMapper modelMapper;
+
+    public ProductController(ProductServiceImpl productService, ModelMapper modelMapper) {
+        this.productService = productService;
+        this.modelMapper = modelMapper;
+    }
 
 
     @GetMapping("/products/add")
@@ -27,7 +37,15 @@ public class ProductController {
 
     @PostMapping("/products/add")
     public String addProductPost(@Valid ProductAddBindingModel productAddBindingModel, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-        
-        return null;
+        if(bindingResult.hasErrors() || this.productService.existsByName(productAddBindingModel.getName())){
+            redirectAttributes.addFlashAttribute("productAddBindingModel", productAddBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.productAddBindingModel", bindingResult);
+
+            return "redirect:/products/add";
+        }
+
+
+        this.productService.addProduct(this.modelMapper.map(productAddBindingModel, ProductAddServiceModel.class));
+        return "index";
     }
 }

@@ -13,15 +13,18 @@
         <strong class="bg-blur rounded border-left border-white pl-3 border-bottom">Добави продукт</strong></h1>
     </div>
     <div class="container bg-blur rounded p-5 mt-5 w-75">
-      <form th:action="@{/products/add}" th:method="post"
+      <form th:action="@{/products/add}" th:method="post" th:object="${productAddBindingModel}"
             class=" text-center text-light">
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Име на продукт</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="name"
+            <input
+                    th:field="*{name}"
+                    th:errorclass="is-invalid"
+                    type="text" class="form-control" id="name"
                     aria-describedby="nameHelpInline" placeholder="Име на продукт">
             <small id="nameHelpInline" class="invalid-feedback errors alert alert-danger">
-              Името не може да е празно!
+              Моля, попълнете името на продукта!
             </small>
           </div>
         </div>
@@ -29,10 +32,13 @@
         <div class="form-group row">
           <label for="price" class="col-sm-2 col-form-label">Цена</label>
           <div class="col-sm-10">
-            <input type="number" step="1" class="form-control" id="price"
+            <input
+                    th:field="*{price}"
+                    th:errorclass="is-invalid"
+                    type="number" step="1" class="form-control" id="price"
                     aria-describedby="priceHelpInline" placeholder="0.00">
             <small id="priceHelpInline" class="invalid-feedback errors alert alert-danger">
-              Цената не може да е отрицателна!
+              Моля, попълнете цената на продукта!
             </small>
           </div>
         </div>
@@ -40,7 +46,10 @@
         <div class="form-group row">
           <label for="location" class="col-sm-2 col-form-label">Локация</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="location"
+            <input
+                    th:field="*{location}"
+                    th:errorclass="is-invalid"
+                    type="text" class="form-control" id="location"
                    aria-describedby="locationHelpInline" placeholder="София">
             <small id="locationHelpInline" class="invalid-feedback errors alert alert-danger">
               Моля, попълнете локацията!
@@ -51,7 +60,10 @@
         <div class="form-group row">
           <label for="description" class="col-sm-2 col-form-label">Описание</label>
           <div class="col-sm-10">
-                    <textarea class="form-control" id="description"
+                    <textarea
+                            th:field="*{description}"
+                            th:errorclass="is-invalid"
+                            class="form-control" id="description"
                             aria-describedby="descriptionHelpInline" placeholder="Описание">
                     </textarea>
             <small id="descriptionHelpInline" class="invalid-feedback errors alert alert-danger">
@@ -63,7 +75,10 @@
         <div class="form-group row">
           <label for="category" class="col-sm-2 col-form-label">Категория</label>
           <div class="col-sm-10">
-            <select id="category" name="category" class="custom-select"
+            <select
+                    th:field="*{category}"
+                    th:errorclass="is-invalid"
+                    id="category" name="category" class="custom-select"
                     aria-describedby="categoryHelpInline">
               <option value="" selected>Категория</option>
               <option th:each="c : ${T(com.unwe.thesis.skylimit.model.entity.enums.CategoryEnum).values()}"
@@ -78,14 +93,20 @@
         <div class="form-group row">
           <span class="col-sm-2 col-form-label">Достъпно ли е в момента?</span>
           <div class="form-check form-check-inline">
-            <input type="radio" class="form-check-input" id="available" name="available"
-                   aria-describedby="availableHelpInline" value="true">
+            <input
+                    th:field="*{available}"
+                    th:errorclass="is-invalid"
+                    type="radio" class="form-check-input" id="available" name="available"
+                   aria-describedby="availableHelpInline" th:value="true">
             <label class="form-check-label" for="available">Да</label>
           </div>
 
           <div class="form-check form-check-inline">
-            <input type="radio" class="form-check-input" id="notAvailable" name="available"
-                   aria-describedby="availableHelpInline" value="false">
+            <input
+                    th:field="*{available}"
+                    th:errorclass="is-invalid"
+                    type="radio" class="form-check-input" id="notAvailable" name="available"
+                   aria-describedby="availableHelpInline" th:value="false">
             <label class="form-check-label" for="notAvailable">Не</label>
           </div>
 
