@@ -65,3 +65,15 @@ strong {
 #welcome-text {
     padding: 10px;
 }
+
+#title-skylimit {
+    padding-top: 100px;
+}
+
+#buy-and-gift, #adventure {
+    padding-top: 25px;
+}
+
+#buttons-navigation {
+    margin-top: 100px;
+}
