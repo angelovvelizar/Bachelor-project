@@ -5,6 +5,7 @@ import com.unwe.thesis.skylimit.model.service.ProductAddServiceModel;
 import com.unwe.thesis.skylimit.service.ProductServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,8 +45,13 @@ public class ProductController {
             return "redirect:/products/add";
         }
 
-
         this.productService.addProduct(this.modelMapper.map(productAddBindingModel, ProductAddServiceModel.class));
         return "index";
+    }
+
+    @GetMapping("/products/water")
+    public String watterAttractions(Model model){
+        model.addAttribute("waterProducts", this.productService.getWaterAttractions());
+        return "water-attractions";
     }
 }

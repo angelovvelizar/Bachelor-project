@@ -19,6 +19,9 @@ public class ProductEntity extends BaseEntity{
     @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column
     private String location;
 
@@ -74,5 +77,13 @@ public class ProductEntity extends BaseEntity{
 
     public void setCategory(CategoryEntity category) {
         this.category = category;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
