@@ -21,6 +21,8 @@ public class ProductAddBindingModel {
     private Boolean available;
     @NotNull
     private CategoryEnum category;
+    @NotBlank
+    private String imageUrl;
 
     public Long getId() {
         return id;
@@ -76,5 +78,13 @@ public class ProductAddBindingModel {
 
     public void setCategory(CategoryEnum category) {
         this.category = category;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

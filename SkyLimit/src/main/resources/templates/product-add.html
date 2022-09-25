@@ -111,6 +111,18 @@
                 </small>
             </div>
 
+            <div class="form-group">
+                <label class="text-white font-weight-bold" for="imageUrl">Линк към изображение</label>
+                <input
+                        th:field="*{imageUrl}"
+                        th:errorclass="is-invalid"
+                        id="imageUrl" type="url" class="form-control"
+                        placeholder="Линк към изображение">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Моля, попълнете!
+                </p>
+            </div>
+
 
             <button type="submit" class="btn btn-info w-50">Добави продукт</button>
         </form>

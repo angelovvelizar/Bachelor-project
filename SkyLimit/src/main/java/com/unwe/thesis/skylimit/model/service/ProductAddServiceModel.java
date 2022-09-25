@@ -11,6 +11,7 @@ public class ProductAddServiceModel {
     private String description;
     private String location;
     private Boolean available;
+    private String imageUrl;
     private CategoryEnum category;
 
     public Long getId() {
@@ -67,5 +68,13 @@ public class ProductAddServiceModel {
 
     public void setCategory(CategoryEnum category) {
         this.category = category;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

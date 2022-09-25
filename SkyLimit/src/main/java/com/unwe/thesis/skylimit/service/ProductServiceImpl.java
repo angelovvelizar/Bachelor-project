@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,6 +48,30 @@ public class ProductServiceImpl {
                 .collect(Collectors.toList());
     }
 
+    public List<ProductViewModel> getAirAttractions(){
+        List<ProductEntity> skyProducts = this.productRepository
+                .findAllByCategory(this.categoryRepository.findByCategory(CategoryEnum.AIR));
+
+        return skyProducts.stream().map(s -> this.modelMapper.map(s, ProductViewModel.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductViewModel> getCityAttractions(){
+        List<ProductEntity> cityProducts = this.productRepository
+                .findAllByCategory(this.categoryRepository.findByCategory(CategoryEnum.CITY));
+
+        return cityProducts.stream().map(c -> this.modelMapper.map(c, ProductViewModel.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductViewModel> getLandAttractions(){
+        List<ProductEntity> landProducts = this.productRepository
+                .findAllByCategory(this.categoryRepository.findByCategory(CategoryEnum.LAND));
+
+        return landProducts.stream().map(l -> this.modelMapper.map(l, ProductViewModel.class))
+                .collect(Collectors.toList());
+    }
+
 
 
 
@@ -78,7 +103,7 @@ public class ProductServiceImpl {
             rafting.setImageUrl("https://cdn.shopify.com/s/files/1/2177/2669/products/flight666_1024x1024.jpg?v=1616507933");
 
             ProductEntity airBalloon = new ProductEntity();
-            airBalloon.setCategory(this.categoryRepository.findByCategory(CategoryEnum.SKY));
+            airBalloon.setCategory(this.categoryRepository.findByCategory(CategoryEnum.AIR));
             airBalloon.setName("Полет с балон");
             airBalloon.setPrice(new BigDecimal("136.00"));
             airBalloon.setDescription("Посрещнете изгрева високо в облаците, заедно с любимите си хора!\n" +
@@ -89,7 +114,7 @@ public class ProductServiceImpl {
             airBalloon.setImageUrl("https://cf.bstatic.com/xdata/images/xphoto/2048x1536/123806704.jpg?k=ee390765951cff7caf2b05e61c8f56ab3f8a5c2b689279616cc8f94fb81184be&o=");
 
             ProductEntity parachute = new ProductEntity();
-            parachute.setCategory(this.categoryRepository.findByCategory(CategoryEnum.SKY));
+            parachute.setCategory(this.categoryRepository.findByCategory(CategoryEnum.AIR));
             parachute.setName("Скок с парашут");
             parachute.setPrice(new BigDecimal("300.00"));
             parachute.setDescription("Адреналинът в кръвта ще бушува дълго след скока," +
@@ -156,11 +181,14 @@ public class ProductServiceImpl {
         }
     }
 
+    public ProductViewModel findById(Long id) {
+        Optional<ProductEntity> productOpt = this.productRepository.findById(id);
+        return this.modelMapper.map(productOpt, ProductViewModel.class);
+    }
 
 
-    //TODO: add option to choose image url in product-add.html,
-    // check if everything with water attractions is okay, make the other attractions(SKY, LAND etc.),
+    //TODO:
     // make the details page, make edit and delete buttons (check if they work),
-    // make about us / contacts page,
     // make edit and delete visible only to admin,
+    // make about us / contacts page,
 }

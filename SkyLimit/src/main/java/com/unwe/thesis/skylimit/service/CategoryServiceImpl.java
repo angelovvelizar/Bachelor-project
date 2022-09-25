@@ -19,7 +19,7 @@ public class CategoryServiceImpl {
     public void seedCategories() {
         if (categoryRepository.count() == 0) {
             CategoryEntity category1 = new CategoryEntity();
-            category1.setCategory(CategoryEnum.SKY);
+            category1.setCategory(CategoryEnum.AIR);
 
             CategoryEntity category2 = new CategoryEntity();
             category2.setCategory(CategoryEnum.LAND);
