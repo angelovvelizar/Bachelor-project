@@ -10,7 +10,7 @@
 <div class="container-fluid" id="products-container">
     <h2 class="text-center text-white mt-5">Приключения във въздуха!</h2>
     <div  class="products row mx-auto d-flex flex-row justify-content-center">
-        <div th:each="sp : ${skyProducts}" th:object="${sp}" class="productEntity card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
+        <div th:each="ap : ${airProducts}" th:object="${ap}" class="productEntity card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
             <div  class="card-img-top-wrapper">
                 <img id="image-title" class="card-img-top" th:src="*{imageUrl}" alt="Attraction image">
             </div>

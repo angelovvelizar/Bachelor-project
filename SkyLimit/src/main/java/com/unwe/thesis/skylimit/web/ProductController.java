@@ -1,17 +1,17 @@
 package com.unwe.thesis.skylimit.web;
 
 import com.unwe.thesis.skylimit.model.binding.ProductAddBindingModel;
+import com.unwe.thesis.skylimit.model.binding.ProductUpdateBindingModel;
+import com.unwe.thesis.skylimit.model.entity.enums.CategoryEnum;
 import com.unwe.thesis.skylimit.model.service.ProductAddServiceModel;
+import com.unwe.thesis.skylimit.model.service.ProductUpdateServiceModel;
 import com.unwe.thesis.skylimit.model.view.ProductViewModel;
 import com.unwe.thesis.skylimit.service.ProductServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -59,8 +59,8 @@ public class ProductController {
 
     @GetMapping("/products/air")
     public String airAttractions(Model model){
-        model.addAttribute("skyProducts", this.productService.getAirAttractions());
-        return "sky-attractions";
+        model.addAttribute("airProducts", this.productService.getAirAttractions());
+        return "air-attractions";
     }
 
     @GetMapping("/products/city")
@@ -80,5 +80,50 @@ public class ProductController {
         ProductViewModel product =  this.productService.findById(id);
         model.addAttribute("product", product);
         return "details";
+    }
+
+    @GetMapping("/products/{id}/edit")
+    public String editOffer(@PathVariable Long id, Model model){
+        ProductViewModel productViewModel = this.productService.findById(id);
+        ProductUpdateBindingModel productUpdateBindingModel = this.modelMapper
+                .map(productViewModel, ProductUpdateBindingModel.class);
+
+        model.addAttribute("productUpdateBindingModel", productUpdateBindingModel);
+        model.addAttribute("category", CategoryEnum.values());
+
+        return "update";
+    }
+
+
+    @GetMapping("/products/{id}/edit/errors")
+    public String editProductErrors(@PathVariable Long id, Model model){
+        model.addAttribute("category", CategoryEnum.values());
+
+        return "update";
+    }
+
+    @PatchMapping("/products/{id}/edit")
+    public String editOffer(@PathVariable Long id, @Valid ProductUpdateBindingModel productUpdateBindingModel,
+                            BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("productUpdateBindingModel", productUpdateBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.productUpdateBindingModel", bindingResult);
+
+            return "redirect:/products/" + id + "/edit/errors";
+        }
+
+        ProductUpdateServiceModel productUpdateServiceModel = this.modelMapper
+                .map(productUpdateBindingModel, ProductUpdateServiceModel.class);
+        this.productService.updateProduct(productUpdateServiceModel);
+        productUpdateServiceModel.setId(id);
+
+        return "redirect:/products/" + id + "/details";
+    }
+
+    @DeleteMapping("/products/{id}")
+    public String deleteProduct(@PathVariable Long id){
+        ProductViewModel product = this.productService.findById(id);
+        this.productService.deleteProduct(id);
+        return "redirect:/products/" + product.getCategory().toString().toLowerCase();
     }
 }

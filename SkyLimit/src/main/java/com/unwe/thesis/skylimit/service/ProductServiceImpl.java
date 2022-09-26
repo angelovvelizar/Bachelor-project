@@ -4,6 +4,7 @@ import com.unwe.thesis.skylimit.model.entity.CategoryEntity;
 import com.unwe.thesis.skylimit.model.entity.ProductEntity;
 import com.unwe.thesis.skylimit.model.entity.enums.CategoryEnum;
 import com.unwe.thesis.skylimit.model.service.ProductAddServiceModel;
+import com.unwe.thesis.skylimit.model.service.ProductUpdateServiceModel;
 import com.unwe.thesis.skylimit.model.view.ProductViewModel;
 import com.unwe.thesis.skylimit.repository.CategoryRepository;
 import com.unwe.thesis.skylimit.repository.ProductRepository;
@@ -70,6 +71,29 @@ public class ProductServiceImpl {
 
         return landProducts.stream().map(l -> this.modelMapper.map(l, ProductViewModel.class))
                 .collect(Collectors.toList());
+    }
+
+    public ProductViewModel findById(Long id) {
+        Optional<ProductEntity> productOpt = this.productRepository.findById(id);
+        ProductEntity productEntity = productOpt.get();
+        ProductViewModel productViewModel = this.modelMapper.map(productEntity, ProductViewModel.class);
+        productViewModel.setCategory(productEntity.getCategory().getCategory());
+
+        return productViewModel;
+    }
+
+    public void updateProduct(ProductUpdateServiceModel productUpdateServiceModel) {
+        ProductEntity productEntity = this.productRepository.findById(productUpdateServiceModel.getId()).orElse(null);
+
+        productEntity.setPrice(productUpdateServiceModel.getPrice());
+        productEntity.setAvailable(productUpdateServiceModel.getAvailable());
+        productEntity.setLocation(productUpdateServiceModel.getLocation());
+        productEntity.setDescription(productUpdateServiceModel.getLocation());
+        productEntity.setName(productUpdateServiceModel.getName());
+        productEntity.setImageUrl(productUpdateServiceModel.getImageUrl());
+        productEntity.setCategory(this.categoryRepository.findByCategory(productUpdateServiceModel.getCategory()));
+
+        this.productRepository.save(productEntity);
     }
 
 
@@ -150,7 +174,7 @@ public class ProductServiceImpl {
                     "  Не е необходимо да сте завършили курс за боравене с огнестрелни оръжия");
             shootingLesson.setLocation("Град София");
             shootingLesson.setAvailable(true);
-            shootingLesson.setImageUrl("https://assets.c2tactical.com/dev/wp-content/uploads/2020/04/01163118/CCW-1026x400.jpg");
+            shootingLesson.setImageUrl("https://media.istockphoto.com/photos/man-firing-usp-pistol-at-target-in-indoor-shooting-range-picture-id540373754?k=20&m=540373754&s=612x612&w=0&h=ujCku5AljKDVp1XsbD1bBHMcSXGry3eEiR99mk7PAns=");
 
             ProductEntity bungeeJumping = new ProductEntity();
             bungeeJumping.setCategory(this.categoryRepository.findByCategory(CategoryEnum.LAND));
@@ -181,14 +205,12 @@ public class ProductServiceImpl {
         }
     }
 
-    public ProductViewModel findById(Long id) {
-        Optional<ProductEntity> productOpt = this.productRepository.findById(id);
-        return this.modelMapper.map(productOpt, ProductViewModel.class);
+    public void deleteProduct(Long id) {
+        this.productRepository.deleteById(id);
     }
 
 
     //TODO:
-    // make the details page, make edit and delete buttons (check if they work),
     // make edit and delete visible only to admin,
-    // make about us / contacts page,
+    // make about us / contacts page, upload images on a server and save the link to the image, fix image adding and persistence
 }

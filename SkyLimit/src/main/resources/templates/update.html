@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons :: head">
+</head>
+
+<body>
+<header th:replace="fragments/commons :: navigation"></header>
+
+<div class="container">
+    <h2 class="text-center text-white">Редактиране на оферта</h2>
+    <form
+            th:object="${productUpdateBindingModel}"
+            th:action="@{/products/{id}/edit(id=*{id})}"
+            th:method="patch"
+            class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+        <div class="row">
+
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-white font-weight-bold" for="name">Име</label>
+                <input
+                        th:field="*{name}"
+                        th:errorclass="is-invalid"
+                        id="name"
+                        type="text" class="form-control"
+                        placeholder="Име">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Моля, попълнете име!
+                </p>
+            </div>
+
+            <div class="form-group col-md-6 mb-3">
+                <label for="price" class="text-white font-weight-bold">Цена</label>
+                <input
+                        id="price"
+                        th:field="*{price}"
+                        th:errorclass="is-invalid"
+                        type="number"
+                        class="form-control"
+                        placeholder="Цена"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Моля, попълнете цената!
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-center text-white font-weight-bold" for="category">Категория</label>
+                <select
+                        th:name="category"
+                        th:errorclass="is-invalid"
+                        id="category"
+                        class="form-control">
+                    <option value="">- Изберете категория -</option>
+                    <option
+                            th:each="aCategory : ${category}"
+                            th:value="${aCategory}"
+                            th:text="${aCategory}"
+                            th:selected="${aCategory} == *{category}">
+                        Вид категория
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Моля, изберете категория!
+                </p>
+            </div>
+
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-white font-weight-bold" for="location">Локация</label>
+                <input
+                        th:field="*{location}"
+                        th:errorclass="is-invalid"
+                        id="location"
+                        type="text" class="form-control"
+                        placeholder="Локация">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Моля, попълнете локацията!
+                </p>
+            </div>
+        </div>
+
+
+            <div class="form-group">
+                <label class="text-white font-weight-bold" for="description">Описание</label>
+                <textarea
+                        th:field="*{description}"
+                        th:errorclass="is-invalid"
+                        id="description"
+                        type="textarea" class="form-control" rows="3"
+                        placeholder="Описание"></textarea>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Моля, попълнете описанието!
+                </p>
+            </div>
+            <div class="form-group">
+                <label class="text-white font-weight-bold" for="imageUrl">Линк към изображение</label>
+                <input
+                        th:field="*{imageUrl}"
+                        th:errorclass="is-invalid"
+                        id="imageUrl"
+                        type="url" class="form-control"
+                        placeholder="Линк">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Моля, поставете линк!
+                </p>
+            </div>
+
+        <div class="form-group row">
+            <span class="col-sm-2 col-form-label font-weight-bold text-white">Достъпно ли е в момента?</span>
+            <div class="form-check form-check-inline">
+                <input
+                        th:field="*{available}"
+                        th:errorclass="is-invalid"
+                        type="radio" class="form-check-input" id="available" name="available"
+                        aria-describedby="availableHelpInline" th:value="true">
+                <label class="form-check-label font-weight-bold text-white" for="available">Да</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input
+                        th:field="*{available}"
+                        th:errorclass="is-invalid"
+                        type="radio" class="form-check-input" id="notAvailable" name="available"
+                        aria-describedby="availableHelpInline" th:value="false">
+                <label class="form-check-label font-weight-bold text-white" for="notAvailable">Не</label>
+            </div>
+
+            <small id="orderTimeHelpInline" class="invalid-feedback alert alert-danger">
+                Моля, изберете една от двете възможности!
+            </small>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="button-holder d-flex">
+                    <input type="submit" class="btn btn-info btn-lg" value="Обнови"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <footer></footer>
+</div>
+
+</body>
+</html>

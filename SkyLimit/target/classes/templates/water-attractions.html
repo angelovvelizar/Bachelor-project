@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons::head">
+</head>
+<body>
+<header th:replace="fragments/commons::navigation">
+</header>
+
+<div class="container-fluid" id="products-container">
+    <h2 class="text-center text-white mt-5">Приключения във водата!</h2>
+    <div  class="products row mx-auto d-flex flex-row justify-content-center">
+        <div th:each="wp : ${waterProducts}" th:object="${wp}" class="productEntity card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
+            <div  class="card-img-top-wrapper">
+                <img id="image-title" class="card-img-top" th:src="*{imageUrl}" alt="Attraction image">
+            </div>
+            <div class="card-body pb-1">
+                <h5 class="card-title" th:text="*{name}">Име</h5>
+            </div>
+            <ul class="productEntity-details list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="card-text">Цена: <span th:text="|*{price} лв.|"> • Цена </span></div>
+                    <div class="card-text">Локация: <span th:text="*{location}">• Локация </span></div>
+                    <div class="card-text">Възможно ли е да се осъществи в момента: <span th:if="*{available == true}">• Да </span>
+                        <span th:unless="*{available == true}">• Не</span></div>
+                </li>
+            </ul>
+            <div class="card-body">
+                <a class="card-link" th:href="@{/products/{id}/details(id=*{id})}">Детайли</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

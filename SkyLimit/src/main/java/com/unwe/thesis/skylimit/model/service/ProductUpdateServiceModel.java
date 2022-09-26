@@ -1,19 +1,17 @@
-package com.unwe.thesis.skylimit.model.view;
-
+package com.unwe.thesis.skylimit.model.service;
 
 import com.unwe.thesis.skylimit.model.entity.enums.CategoryEnum;
-
 import java.math.BigDecimal;
 
-public class ProductViewModel {
+public class ProductUpdateServiceModel {
     private Long id;
     private String name;
     private BigDecimal price;
     private String description;
     private String location;
-    private String imageUrl;
     private Boolean available;
     private CategoryEnum category;
+    private String imageUrl;
 
     public Long getId() {
         return id;
@@ -55,14 +53,6 @@ public class ProductViewModel {
         this.location = location;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
     public Boolean getAvailable() {
         return available;
     }
@@ -77,5 +67,13 @@ public class ProductViewModel {
 
     public void setCategory(CategoryEnum category) {
         this.category = category;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
