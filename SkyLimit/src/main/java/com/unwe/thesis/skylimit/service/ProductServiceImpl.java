@@ -2,12 +2,16 @@ package com.unwe.thesis.skylimit.service;
 
 import com.unwe.thesis.skylimit.model.entity.CategoryEntity;
 import com.unwe.thesis.skylimit.model.entity.ProductEntity;
+import com.unwe.thesis.skylimit.model.entity.UserEntity;
+import com.unwe.thesis.skylimit.model.entity.UserRoleEntity;
 import com.unwe.thesis.skylimit.model.entity.enums.CategoryEnum;
+import com.unwe.thesis.skylimit.model.entity.enums.RoleEnum;
 import com.unwe.thesis.skylimit.model.service.ProductAddServiceModel;
 import com.unwe.thesis.skylimit.model.service.ProductUpdateServiceModel;
 import com.unwe.thesis.skylimit.model.view.ProductViewModel;
 import com.unwe.thesis.skylimit.repository.CategoryRepository;
 import com.unwe.thesis.skylimit.repository.ProductRepository;
+import com.unwe.thesis.skylimit.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +26,13 @@ public class ProductServiceImpl {
     private final ModelMapper modelMapper;
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
 
-    public ProductServiceImpl(ModelMapper modelMapper, ProductRepository productRepository, CategoryRepository categoryRepository) {
+    public ProductServiceImpl(ModelMapper modelMapper, ProductRepository productRepository, CategoryRepository categoryRepository, UserRepository userRepository) {
         this.modelMapper = modelMapper;
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
     }
 
     public boolean existsByName(String name){
@@ -50,10 +56,10 @@ public class ProductServiceImpl {
     }
 
     public List<ProductViewModel> getAirAttractions(){
-        List<ProductEntity> skyProducts = this.productRepository
+        List<ProductEntity> airProducts = this.productRepository
                 .findAllByCategory(this.categoryRepository.findByCategory(CategoryEnum.AIR));
 
-        return skyProducts.stream().map(s -> this.modelMapper.map(s, ProductViewModel.class))
+        return airProducts.stream().map(s -> this.modelMapper.map(s, ProductViewModel.class))
                 .collect(Collectors.toList());
     }
 
@@ -96,6 +102,15 @@ public class ProductServiceImpl {
         this.productRepository.save(productEntity);
     }
 
+    public void deleteProduct(Long id) {
+        this.productRepository.deleteById(id);
+    }
+
+    public boolean isAdmin(String username){
+        UserEntity userEntity = this.userRepository.findByUsername(username).orElse(null);
+        return userEntity.getRoles().stream().map(UserRoleEntity::getRole).anyMatch(r -> r == RoleEnum.ADMIN);
+    }
+
 
 
 
@@ -110,7 +125,7 @@ public class ProductServiceImpl {
                     " Можете да избирате между джетове с различна мощност според Вашите предпочитания и опит. ");
             jetRiding.setLocation("Град Созопол и язовир Искър");
             jetRiding.setAvailable(true);
-            jetRiding.setImageUrl("https://waterskireviews.com/wp-content/uploads/2017/09/Best-Kids-Water-Skis-in-2018-1-1.jpg");
+            jetRiding.setImageUrl("https://res.cloudinary.com/hoffenn/image/upload/v1664544239/SkyLimitPics/jet_cefddt.jpg");
 
             ProductEntity rafting = new ProductEntity();
             rafting.setCategory(this.categoryRepository.findByCategory(CategoryEnum.WATER));
@@ -124,7 +139,7 @@ public class ProductServiceImpl {
 
             rafting.setLocation("Кресненско дефиле, река Струма");
             rafting.setAvailable(true);
-            rafting.setImageUrl("https://cdn.shopify.com/s/files/1/2177/2669/products/flight666_1024x1024.jpg?v=1616507933");
+            rafting.setImageUrl("https://res.cloudinary.com/hoffenn/image/upload/v1664544540/SkyLimitPics/rafting_la9f9e.webp");
 
             ProductEntity airBalloon = new ProductEntity();
             airBalloon.setCategory(this.categoryRepository.findByCategory(CategoryEnum.AIR));
@@ -135,7 +150,7 @@ public class ProductServiceImpl {
                     " и буквално да отлетят накъдето ги отвее вятърът.");
             airBalloon.setLocation("В район Плиска/Мадара");
             airBalloon.setAvailable(true);
-            airBalloon.setImageUrl("https://cf.bstatic.com/xdata/images/xphoto/2048x1536/123806704.jpg?k=ee390765951cff7caf2b05e61c8f56ab3f8a5c2b689279616cc8f94fb81184be&o=");
+            airBalloon.setImageUrl("https://res.cloudinary.com/hoffenn/image/upload/v1664544521/SkyLimitPics/air-balloon_vyzwiw.jpg");
 
             ProductEntity parachute = new ProductEntity();
             parachute.setCategory(this.categoryRepository.findByCategory(CategoryEnum.AIR));
@@ -147,7 +162,7 @@ public class ProductServiceImpl {
                     " но обещаваме, че ще бъде незабравимо!");
             parachute.setLocation("В района на Монатана");
             parachute.setAvailable(true);
-            parachute.setImageUrl("https://www.giftyland.com/32346-thickbox_default/tandem-parachute-jump-in-rapla.jpg");
+            parachute.setImageUrl("https://res.cloudinary.com/hoffenn/image/upload/v1664544537/SkyLimitPics/parachute_efw9lx.jpg");
 
             ProductEntity escapeRoom = new ProductEntity();
             escapeRoom.setCategory(this.categoryRepository.findByCategory(CategoryEnum.CITY));
@@ -161,7 +176,7 @@ public class ProductServiceImpl {
                     " търпение и отборният дух на поне 2-ма играчи.");
             escapeRoom.setLocation("Град София");
             escapeRoom.setAvailable(true);
-            escapeRoom.setImageUrl("https://www.mysticescaperoom.com/Assets/Rooms2/AOT-3.jpg");
+            escapeRoom.setImageUrl("https://res.cloudinary.com/hoffenn/image/upload/v1664544531/SkyLimitPics/escape-room_tgpwmp.jpg");
 
             ProductEntity shootingLesson = new ProductEntity();
             shootingLesson.setCategory(this.categoryRepository.findByCategory(CategoryEnum.CITY));
@@ -174,7 +189,7 @@ public class ProductServiceImpl {
                     "  Не е необходимо да сте завършили курс за боравене с огнестрелни оръжия");
             shootingLesson.setLocation("Град София");
             shootingLesson.setAvailable(true);
-            shootingLesson.setImageUrl("https://media.istockphoto.com/photos/man-firing-usp-pistol-at-target-in-indoor-shooting-range-picture-id540373754?k=20&m=540373754&s=612x612&w=0&h=ujCku5AljKDVp1XsbD1bBHMcSXGry3eEiR99mk7PAns=");
+            shootingLesson.setImageUrl("https://res.cloudinary.com/hoffenn/image/upload/v1664544543/SkyLimitPics/shooting_fflinw.jpg");
 
             ProductEntity bungeeJumping = new ProductEntity();
             bungeeJumping.setCategory(this.categoryRepository.findByCategory(CategoryEnum.LAND));
@@ -184,7 +199,7 @@ public class ProductServiceImpl {
                     " Провокирайте смелостта и куража с доза адреналин или скочете в тандем с любимия човек. ");
             bungeeJumping.setLocation("Село Буново");
             bungeeJumping.setAvailable(true);
-            bungeeJumping.setImageUrl("https://images.chinahighlights.com/allpicture/2020/12/4bdd3e7fc61a43779b4f423b_cut_800x500_10.jpg");
+            bungeeJumping.setImageUrl("https://res.cloudinary.com/hoffenn/image/upload/v1664544526/SkyLimitPics/bungee_gqvty4.webp");
 
             ProductEntity horseRiding = new ProductEntity();
             horseRiding.setCategory(this.categoryRepository.findByCategory(CategoryEnum.LAND));
@@ -196,7 +211,7 @@ public class ProductServiceImpl {
                     " За това ще ви помогне квалифициран инструктор по езда с подходящ ездитен кон.");
             horseRiding.setLocation("Планина Витоша");
             horseRiding.setAvailable(true);
-            horseRiding.setImageUrl("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/1c/6c/35/horseriding-bulgaria.jpg?w=500&h=400&s=1");
+            horseRiding.setImageUrl("https://res.cloudinary.com/hoffenn/image/upload/v1664544534/SkyLimitPics/horse_rg7qka.jpg");
 
 
             this.productRepository.saveAll(Set.of(jetRiding, rafting, airBalloon,
@@ -205,12 +220,12 @@ public class ProductServiceImpl {
         }
     }
 
-    public void deleteProduct(Long id) {
-        this.productRepository.deleteById(id);
-    }
 
 
-    //TODO:
-    // make edit and delete visible only to admin,
-    // make about us / contacts page, upload images on a server and save the link to the image, fix image adding and persistence
+
+    //TODO: make buy button and order info page
+    // make about us / contacts page
+
+
+    //flyboard link - https://res.cloudinary.com/hoffenn/image/upload/v1664544957/SkyLimitPics/flyboard_mu1vjy.webp
 }

@@ -8,6 +8,7 @@ import com.unwe.thesis.skylimit.model.service.ProductUpdateServiceModel;
 import com.unwe.thesis.skylimit.model.view.ProductViewModel;
 import com.unwe.thesis.skylimit.service.ProductServiceImpl;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class ProductController {
@@ -82,8 +84,9 @@ public class ProductController {
         return "details";
     }
 
+    @PreAuthorize("@productServiceImpl.isAdmin(#principal.name)")
     @GetMapping("/products/{id}/edit")
-    public String editOffer(@PathVariable Long id, Model model){
+    public String editOffer(@PathVariable Long id, Model model, Principal principal){
         ProductViewModel productViewModel = this.productService.findById(id);
         ProductUpdateBindingModel productUpdateBindingModel = this.modelMapper
                 .map(productViewModel, ProductUpdateBindingModel.class);
@@ -102,9 +105,10 @@ public class ProductController {
         return "update";
     }
 
+    @PreAuthorize("@productServiceImpl.isAdmin(#principal.name)")
     @PatchMapping("/products/{id}/edit")
     public String editOffer(@PathVariable Long id, @Valid ProductUpdateBindingModel productUpdateBindingModel,
-                            BindingResult bindingResult, RedirectAttributes redirectAttributes){
+                            BindingResult bindingResult, RedirectAttributes redirectAttributes, Principal principal){
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("productUpdateBindingModel", productUpdateBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.productUpdateBindingModel", bindingResult);
@@ -120,8 +124,9 @@ public class ProductController {
         return "redirect:/products/" + id + "/details";
     }
 
+    @PreAuthorize("@productServiceImpl.isAdmin(#principal.name)")
     @DeleteMapping("/products/{id}")
-    public String deleteProduct(@PathVariable Long id){
+    public String deleteProduct(@PathVariable Long id, Principal principal){
         ProductViewModel product = this.productService.findById(id);
         this.productService.deleteProduct(id);
         return "redirect:/products/" + product.getCategory().toString().toLowerCase();

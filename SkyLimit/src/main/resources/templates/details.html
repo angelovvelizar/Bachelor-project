@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/commons :: head">
 </head>
 <body>
@@ -24,11 +24,15 @@
             </ul>
             <div class="card-body">
                 <div class="row">
-                    <th:block>
-                        <a class="btn btn-link" th:href="@{/products/{id}/edit(id=*{id})}">Редактирай</a>
+                    <th:block sec:authorize="hasRole('ADMIN')">
+                        <a class="btn btn-outline-primary" th:href="@{/products/{id}/edit(id=*{id})}">Редактирай</a>
                         <form th:action="@{/products/{id}(id=*{id})}" th:method="delete">
-                            <input type="submit" class="btn btn-link" value="Изтрий"/>
+                            <input type="submit" class="btn btn-outline-primary" value="Изтрий"/>
                         </form>
+                    </th:block>
+
+                    <th:block sec:authorize="isAuthenticated()">
+                    <a class="btn btn-outline-primary" href="/">Резервирай</a>
                     </th:block>
                 </div>
             </div>
