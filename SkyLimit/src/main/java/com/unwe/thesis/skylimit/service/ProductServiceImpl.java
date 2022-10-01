@@ -225,6 +225,7 @@ public class ProductServiceImpl {
 
     //TODO: make buy button and order info page
     // make about us / contacts page
+    // test database triggers
 
 
     //flyboard link - https://res.cloudinary.com/hoffenn/image/upload/v1664544957/SkyLimitPics/flyboard_mu1vjy.webp
