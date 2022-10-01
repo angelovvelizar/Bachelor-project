@@ -14,6 +14,8 @@ public class OrderEntity extends BaseEntity{
     @Column(name = "order_date", nullable = false)
     private LocalDateTime orderDate;
 
+    @Column
+    private String zip;
     @ManyToOne
     private UserEntity buyer;
 
@@ -50,5 +52,13 @@ public class OrderEntity extends BaseEntity{
 
     public void setProduct(ProductEntity product) {
         this.product = product;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 }

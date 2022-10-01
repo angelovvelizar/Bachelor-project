@@ -67,10 +67,11 @@ strong {
     display: inline-block;
     border: 2px solid white;
     border-radius: 80px;
-    padding: 40px;
+    padding: 35px;
     transition: all .2s ease-in-out;
     text-decoration: none;
     width: 200px;
+    text-align: center;
 }
 
 .text {
@@ -94,6 +95,55 @@ strong {
 
 .btn {
     margin-right: 20px;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+#checkout-container {
+    max-width: 960px;
+}
+
+.form-label, #payment{
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: #17a2b8;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+#credit-card {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+
+#check-information {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    padding: 5px;
+}
+
+#buy-button {
+    margin-top: 7px;
+    margin-left: 150px;
+}
+
+.checkout-main {
+    background-color: lightblue;
 }
 
 

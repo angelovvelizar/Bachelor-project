@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons :: head">
+</head>
+<body>
+<header th:replace="fragments/commons :: navigation"></header>
+
+<div id="checkout-container" class="container" th:object="${product}">
+    <main class="checkout-main">
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="/images/skylimit-logo.png" alt="skyLimit-logo" width="72"
+                 height="57">
+            <h2 class="text-center text-light">Благодарим, че избрахте нас!</h2>
+            <p id="check-information" class="lead bg-warning">Моля, проверете дали всички данни по поръчката са правилни и след това
+                преминете към резервирането!</p>
+        </div>
+
+        <div class="row g-5">
+            <div class="col-md-5 col-lg-4 order-md-last">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-light">Вашата поръчка</span>
+                </h4>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0">Име на продукта</h6>
+                            <small class="text-muted">Кратко описание</small>
+                        </div>
+                        <span class="text-muted">$12</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Общо (лева)</span>
+                        <strong>$20</strong>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-md-7 col-lg-8">
+                <h4  class="mb-3 text-light">Вашата информация</h4>
+                <form class="needs-validation" novalidate>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="firstName" class="form-label">Първо име</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="Първо име" value="" required>
+                            <div class="invalid-feedback">
+                                Valid first name is required.
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="lastName" class="form-label">Фамилия</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="Фамилия" value="" required>
+                            <div class="invalid-feedback">
+                                Valid last name is required.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="username" class="form-label">Потребителско име</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text">@</span>
+                                <input type="text" class="form-control" id="username" placeholder="Потребителско име" required>
+                                <div class="invalid-feedback">
+                                    Your username is required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="email" class="form-label">Имейл</label>
+                            <input type="email" class="form-control" id="email" placeholder="email@example.com">
+                            <div class="invalid-feedback">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address" class="form-label">Адрес</label>
+                            <input type="text" class="form-control" id="address" placeholder="улица... номер " required>
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="zip" class="form-label">Пощенски код</label>
+                            <input type="text" class="form-control" id="zip" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Zip code required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 id="payment" class="mb-3">Плащане</h4>
+
+                    <div class="my-3">
+                        <div class="form-check">
+                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked
+                                   required>
+                            <label id="credit-card" class="form-check-label" for="credit">Кредитна/Дебитна карта</label>
+                        </div>
+                    </div>
+
+                    <div class="row gy-3">
+                        <div class="col-md-6">
+                            <label for="cc-name" class="form-label">Име върху картата</label>
+                            <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                            <small class="text-light">Пълно име, което е върху картата</small>
+                            <div class="invalid-feedback">
+                                Name on card is required
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="cc-number" class="form-label">Номер на картата</label>
+                            <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Credit card number is required
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="cc-expiration" class="form-label">Дата на изтичане</label>
+                            <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Expiration date required
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="cc-cvv" class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Security code required
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="buy-button" class="w-100 btn btn-primary btn-lg" type="submit">Резервирай!</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

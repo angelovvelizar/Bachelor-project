@@ -4,6 +4,7 @@ import com.unwe.thesis.skylimit.model.entity.UserEntity;
 import com.unwe.thesis.skylimit.model.entity.UserRoleEntity;
 import com.unwe.thesis.skylimit.model.entity.enums.RoleEnum;
 import com.unwe.thesis.skylimit.model.service.UserRegisterServiceModel;
+import com.unwe.thesis.skylimit.model.view.UserViewModel;
 import com.unwe.thesis.skylimit.repository.UserRepository;
 import com.unwe.thesis.skylimit.repository.UserRoleRepository;
 import org.modelmapper.ModelMapper;
@@ -26,6 +27,30 @@ public class UserServiceImpl {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public UserViewModel findByUsername(String username){
+        //TODO: Finish this
+
+        return null;
+    }
+
+
+    public boolean isUsernameOccupied(String username) {
+        return this.userRepository.existsByUsername(username);
+    }
+
+    public boolean isEmailOccupied(String email) {
+        return this.userRepository.existsByEmail(email);
+    }
+
+    public void registerUser(UserRegisterServiceModel userRegisterServiceModel) {
+        UserEntity currentUser = this.modelMapper.map(userRegisterServiceModel, UserEntity.class);
+        currentUser.setRoles(Set.of(this.userRoleRepository.findByRole(RoleEnum.USER)));
+        currentUser.setOrders(new LinkedHashSet<>());
+        currentUser.setPassword(this.passwordEncoder.encode(userRegisterServiceModel.getPassword()));
+
+        this.userRepository.save(currentUser);
     }
 
 
@@ -63,20 +88,4 @@ public class UserServiceImpl {
         }
     }
 
-    public boolean isUsernameOccupied(String username) {
-        return this.userRepository.existsByUsername(username);
-    }
-
-    public boolean isEmailOccupied(String email) {
-        return this.userRepository.existsByEmail(email);
-    }
-
-    public void registerUser(UserRegisterServiceModel userRegisterServiceModel) {
-        UserEntity currentUser = this.modelMapper.map(userRegisterServiceModel, UserEntity.class);
-        currentUser.setRoles(Set.of(this.userRoleRepository.findByRole(RoleEnum.USER)));
-        currentUser.setOrders(new LinkedHashSet<>());
-        currentUser.setPassword(this.passwordEncoder.encode(userRegisterServiceModel.getPassword()));
-
-        this.userRepository.save(currentUser);
-    }
 }
