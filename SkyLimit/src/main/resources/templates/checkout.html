@@ -5,7 +5,7 @@
 <body>
 <header th:replace="fragments/commons :: navigation"></header>
 
-<div id="checkout-container" class="container" th:object="${product}">
+<div id="checkout-container" class="container" th:object="${buyer}">
     <main class="checkout-main">
         <div class="py-5 text-center">
             <img class="d-block mx-auto mb-4" src="/images/skylimit-logo.png" alt="skyLimit-logo" width="72"
@@ -23,14 +23,14 @@
                 <ul class="list-group mb-3">
                     <li class="list-group-item d-flex justify-content-between lh-sm">
                         <div>
-                            <h6 class="my-0">Име на продукта</h6>
+                            <h6 class="my-0" th:text="${product.name}">Име на продукта</h6>
                             <small class="text-muted">Кратко описание</small>
                         </div>
-                        <span class="text-muted">$12</span>
+                        <span class="text-muted" th:text="${product.price}">$12</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Общо (лева)</span>
-                        <strong>$20</strong>
+                        <strong th:text="|${product.price} лв.|">20</strong>
                     </li>
                 </ul>
 
@@ -41,15 +41,15 @@
                     <div class="row g-3">
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label">Първо име</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="Първо име" value="" required>
-                            <div class="invalid-feedback">
-                                Valid first name is required.
+                            <input type="text" class="form-control" id="firstName" placeholder="Първо име" th:value="*{firstName}" required>
+                            <div class="invalid-feedback alert alert-danger">
+                                Моля, попълнете!
                             </div>
                         </div>
 
                         <div class="col-sm-6">
                             <label for="lastName" class="form-label">Фамилия</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Фамилия" value="" required>
+                            <input type="text" class="form-control" id="lastName" placeholder="Фамилия" th:value="*{lastName}" required>
                             <div class="invalid-feedback">
                                 Valid last name is required.
                             </div>
@@ -59,7 +59,7 @@
                             <label for="username" class="form-label">Потребителско име</label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text">@</span>
-                                <input type="text" class="form-control" id="username" placeholder="Потребителско име" required>
+                                <input type="text" class="form-control" id="username" placeholder="Потребителско име" th:value="*{username}" required>
                                 <div class="invalid-feedback">
                                     Your username is required.
                                 </div>
@@ -68,7 +68,7 @@
 
                         <div class="col-12">
                             <label for="email" class="form-label">Имейл</label>
-                            <input type="email" class="form-control" id="email" placeholder="email@example.com">
+                            <input type="email" class="form-control" id="email" placeholder="email@example.com" th:value="*{email}">
                             <div class="invalid-feedback">
                                 Please enter a valid email address for shipping updates.
                             </div>
@@ -76,7 +76,7 @@
 
                         <div class="col-12">
                             <label for="address" class="form-label">Адрес</label>
-                            <input type="text" class="form-control" id="address" placeholder="улица... номер " required>
+                            <input type="text" class="form-control" id="address" placeholder="улица... номер " th:value="*{address}" required>
                             <div class="invalid-feedback">
                                 Please enter your shipping address.
                             </div>

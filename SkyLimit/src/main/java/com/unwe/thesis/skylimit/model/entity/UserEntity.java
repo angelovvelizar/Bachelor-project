@@ -28,7 +28,7 @@ public class UserEntity extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserRoleEntity> roles;
 
-    @OneToMany(mappedBy = "buyer", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<OrderEntity> orders;
 
     public String getUsername() {

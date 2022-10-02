@@ -223,7 +223,7 @@ public class ProductServiceImpl {
 
 
 
-    //TODO: make buy button and order info page
+    //TODO:
     // make about us / contacts page
     // test database triggers
 
