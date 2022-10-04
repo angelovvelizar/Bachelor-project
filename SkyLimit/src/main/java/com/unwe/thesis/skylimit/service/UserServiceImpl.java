@@ -30,7 +30,6 @@ public class UserServiceImpl {
     }
 
     public UserViewModel findByUsername(String username){
-        //TODO: Finish this
         UserEntity user = this.userRepository.findByUsername(username).orElse(null);
         return this.modelMapper.map(user, UserViewModel.class);
     }

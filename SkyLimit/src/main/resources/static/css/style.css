@@ -146,4 +146,15 @@ strong {
     background-color: lightblue;
 }
 
+.font-weight-bold {
+    font-size: 25px;
+}
+
+#contacts-container {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    width: 538px;
+    height: 250px;
+}
+
 

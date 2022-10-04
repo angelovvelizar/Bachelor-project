@@ -3,16 +3,18 @@ package com.unwe.thesis.skylimit.model.binding;
 import com.unwe.thesis.skylimit.model.entity.ProductEntity;
 import com.unwe.thesis.skylimit.model.entity.UserEntity;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class OrderDetailBindingModel {
-    //TODO: finish this
     private BigDecimal amount;
     private LocalDateTime orderDate;
+    @NotBlank
     private String zip;
-    private UserEntity buyer; //TODO: try with user binding model and validations
-    private ProductEntity product;
+    private String buyer;
+    private Long productId;
 
     public BigDecimal getAmount() {
         return amount;
@@ -38,19 +40,19 @@ public class OrderDetailBindingModel {
         this.zip = zip;
     }
 
-    public UserEntity getBuyer() {
+    public String getBuyer() {
         return buyer;
     }
 
-    public void setBuyer(UserEntity buyer) {
+    public void setBuyer(String buyer) {
         this.buyer = buyer;
     }
 
-    public ProductEntity getProduct() {
-        return product;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setProduct(ProductEntity product) {
-        this.product = product;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }

@@ -5,7 +5,6 @@ import com.unwe.thesis.skylimit.model.entity.OrderEntity;
 import java.util.Set;
 
 public class UserViewModel {
-    //TODO: finish this and use it in order controller
     private Long id;
     private String username;
     private String email;

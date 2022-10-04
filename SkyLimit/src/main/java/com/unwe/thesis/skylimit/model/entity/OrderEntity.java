@@ -16,6 +16,7 @@ public class OrderEntity extends BaseEntity{
 
     @Column
     private String zip;
+
     @ManyToOne
     private UserEntity buyer;
 

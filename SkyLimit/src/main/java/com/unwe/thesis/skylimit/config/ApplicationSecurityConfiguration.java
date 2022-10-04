@@ -26,7 +26,7 @@ public class ApplicationSecurityConfiguration {
         http
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers("/", "/users/login", "/users/register", "/products/**").permitAll()
+                .antMatchers("/", "/users/login", "/users/register", "/products/**", "/contacts").permitAll()
                 .antMatchers("/products/add").hasRole(RoleEnum.ADMIN.name())
                 .antMatchers("/**").authenticated()
                 .and()
