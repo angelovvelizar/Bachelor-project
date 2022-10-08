@@ -131,4 +131,9 @@ public class ProductController {
         this.productService.deleteProduct(id);
         return "redirect:/products/" + product.getCategory().toString().toLowerCase();
     }
+
+    @GetMapping("/products/{id}/json")
+    public @ResponseBody ProductViewModel getProductToJson(@PathVariable Long id){
+        return this.productService.findById(id);
+    }
 }
