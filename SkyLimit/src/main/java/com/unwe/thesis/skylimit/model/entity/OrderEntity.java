@@ -1,5 +1,8 @@
 package com.unwe.thesis.skylimit.model.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,6 +24,7 @@ public class OrderEntity extends BaseEntity{
     private UserEntity buyer;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private ProductEntity product;
 
     public BigDecimal getAmount() {

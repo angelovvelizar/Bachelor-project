@@ -31,6 +31,8 @@ public class ProductEntity extends BaseEntity{
     @ManyToOne
     private CategoryEntity category;
 
+
+
     public String getName() {
         return name;
     }

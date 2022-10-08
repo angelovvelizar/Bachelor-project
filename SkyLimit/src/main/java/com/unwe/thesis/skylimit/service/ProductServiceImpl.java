@@ -160,7 +160,7 @@ public class ProductServiceImpl {
                     " а споменът ще остане за цял живот! Невъзможно е да опишем чувствата," +
                     " които ще ви връхлетят, когато скочите от самолета," +
                     " но обещаваме, че ще бъде незабравимо!");
-            parachute.setLocation("В района на Монатана");
+            parachute.setLocation("В района на Монтана");
             parachute.setAvailable(true);
             parachute.setImageUrl("https://res.cloudinary.com/hoffenn/image/upload/v1664544537/SkyLimitPics/parachute_efw9lx.jpg");
 
@@ -224,7 +224,6 @@ public class ProductServiceImpl {
 
 
     //TODO:
-    // make about us / contacts page
     // test database triggers
 
 
