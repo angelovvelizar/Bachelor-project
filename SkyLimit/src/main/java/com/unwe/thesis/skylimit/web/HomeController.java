@@ -20,6 +20,6 @@ public class HomeController {
 
     @PostMapping("/contacts/receive")
     public String contactsReceive(){
-        return "index";
+        return "redirect:/";
     }
 }

@@ -220,14 +220,6 @@ public class ProductServiceImpl {
         }
     }
 
-
-
-
-
-
-    //TODO:
-    // test database triggers
-
-
     //flyboard link - https://res.cloudinary.com/hoffenn/image/upload/v1664544957/SkyLimitPics/flyboard_mu1vjy.webp
+    //update img paintball - https://res.cloudinary.com/hoffenn/image/upload/v1664544962/SkyLimitPics/paintball_cnhzw6.jpg
 }

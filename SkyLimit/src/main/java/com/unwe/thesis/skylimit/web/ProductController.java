@@ -6,6 +6,7 @@ import com.unwe.thesis.skylimit.model.entity.enums.CategoryEnum;
 import com.unwe.thesis.skylimit.model.service.ProductAddServiceModel;
 import com.unwe.thesis.skylimit.model.service.ProductUpdateServiceModel;
 import com.unwe.thesis.skylimit.model.view.ProductViewModel;
+import com.unwe.thesis.skylimit.service.CategoryServiceImpl;
 import com.unwe.thesis.skylimit.service.ProductServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,10 +23,12 @@ import java.security.Principal;
 public class ProductController {
     private final ProductServiceImpl productService;
     private final ModelMapper modelMapper;
+    private final CategoryServiceImpl categoryService;
 
-    public ProductController(ProductServiceImpl productService, ModelMapper modelMapper) {
+    public ProductController(ProductServiceImpl productService, ModelMapper modelMapper, CategoryServiceImpl categoryService) {
         this.productService = productService;
         this.modelMapper = modelMapper;
+        this.categoryService = categoryService;
     }
 
 
@@ -49,8 +52,9 @@ public class ProductController {
             return "redirect:/products/add";
         }
 
+
         this.productService.addProduct(this.modelMapper.map(productAddBindingModel, ProductAddServiceModel.class));
-        return "index";
+        return "redirect:/products/" + productAddBindingModel.getCategory().toString().toLowerCase();
     }
 
     @GetMapping("/products/water")
